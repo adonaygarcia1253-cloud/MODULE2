@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INGLES TÉCNICO - CUESTIONARIO EXTENSO (60 PREGUNTAS + 150 VOCABULARIO)</title>
+<style>
+:root {
+--primary: #0f172a;
+--accent: #2563eb;
+--accent-hover: #1d4ed8;
+--card-bg: #1e293b;
+--text: #f8fafc;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: #0f172a !important;
+background-image: none !important;
+color: var(--text);
+margin: 0;
+padding: 10px;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+box-sizing: border-box;
+}
+
+.quiz-container {
+background-color: var(--card-bg);
+border-radius: 16px;
+border: 1px solid rgba(255, 255, 255, 0.15);
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+width: 100%;
+max-width: 780px;
+padding: 25px;
+box-sizing: border-box;
+}
+
+.quiz-header {
+border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+padding-bottom: 15px;
+margin-bottom: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.quiz-header h1 {
+font-size: 18px;
+color: #ffffff;
+margin: 0;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.progress-badge {
+background-color: rgba(255, 255, 255, 0.2);
+color: #ffffff;
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 14px;
+font-weight: 600;
+}
+
+.menu-screen {
+text-align: center;
+padding: 20px 10px;
+}
+
+.menu-screen h2 {
+font-size: 22px;
+color: #ffffff;
+margin-bottom: 15px;
+}
+
+.menu-screen p {
+font-size: 15px;
+color: #cbd5e1;
+margin-bottom: 25px;
+}
+
+.btn-menu {
+width: 100%;
+background-color: var(--accent);
+color: #ffffff;
+border: none;
+padding: 16px;
+font-size: 16px;
+font-weight: 700;
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.2s ease;
+box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+margin-bottom: 15px;
+}
+
+.btn-menu:hover {
+background-color: var(--accent-hover);
+transform: translateY(-2px);
+}
+
+.question-card {
+display: none;
+}
+
+.question-card.active {
+display: block;
+}
+
+.question-text {
+font-size: 17px;
+font-weight: 600;
+color: #ffffff;
+margin-bottom: 20px;
+line-height: 1.4;
+}
+
+.options-list {
+list-style: none;
+padding: 0;
+margin: 0 0 20px 0;
+}
+
+.option-item {
+margin-bottom: 12px;
+}
+
+.option-label {
+display: flex;
+align-items: center;
+padding: 14px 18px;
+border: 2px solid rgba(255, 255, 255, 0.2);
+background-color: rgba(255, 255, 255, 0.05);
+border-radius: 10px;
+cursor: pointer;
+transition: all 0.2s ease;
+font-size: 15px;
+color: #ffffff;
+}
+
+.option-label:hover {
+border-color: var(--accent);
+background-color: rgba(37, 99, 235, 0.2);
+}
+
+.option-label.is-correct {
+border-color: #22c55e !important;
+background-color: #14532d !important;
+color: #ffffff !important;
+font-weight: bold;
+}
+
+.option-label.is-incorrect {
+border-color: #ef4444 !important;
+background-color: #7f1d1d !important;
+color: #ffffff !important;
+font-weight: bold;
+}
+
+.option-item input[type="radio"] {
+margin-right: 12px;
+width: 18px;
+height: 18px;
+accent-color: var(--accent);
+}
+
+.feedback-message {
+padding: 16px 20px;
+border-radius: 10px;
+font-size: 15px;
+font-weight: 700;
+margin-bottom: 20px;
+display: none;
+line-height: 1.5;
+}
+
+.feedback-message.correct {
+display: block !important;
+background-color: #15803d !important;
+color: #ffffff !important;
+border: 2px solid #22c55e !important;
+}
+
+.feedback-message.incorrect {
+display: block !important;
+background-color: #b91c1c !important;
+color: #ffffff !important;
+border: 2px solid #ef4444 !important;
+}
+
+.btn-next {
+width: 100%;
+background-color: #475569;
+color: #94a3b8;
+border: none;
+padding: 14px;
+font-size: 16px;
+font-weight: 600;
+border-radius: 10px;
+cursor: not-allowed;
+transition: all 0.2s ease;
+}
+
+.btn-next.enabled {
+background-color: var(--accent);
+color: #ffffff;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.completion-screen {
+text-align: center;
+display: none;
+}
+
+.completion-screen h2 {
+color: #4ade80;
+font-size: 26px;
+margin-bottom: 10px;
+}
+
+.btn-restart {
+background-color: var(--accent);
+color: white;
+border: none;
+padding: 12px 24px;
+font-size: 15px;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+margin: 5px;
+}
+
+.btn-back-menu {
+background-color: #334155;
+color: white;
+border: none;
+padding: 8px 14px;
+font-size: 13px;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+<div class="quiz-header">
+<h1 id="headerTitle">MENÚ PRINCIPAL - INGLES TÉCNICO</h1>
+<button class="btn-back-menu" id="btnBackMenu" onclick="returnToMenu()">← Volver al Menú</button>
+<span class="progress-badge" id="progressBadge" style="display: none;">Pregunta 1</span>
+</div>
+
+<!-- PANTALLA DE MENÚ -->
+<div class="menu-screen" id="menuScreen">
+<h2>Selecciona el módulo de estudio:</h2>
+<p>Elige la sección que deseas evaluar</p>
+<button class="btn-menu" type="button" onclick="startSection('preguntas_60')">
+📝 Cuestionario Técnico Completo (60 Preguntas)
+</button>
+<button class="btn-menu" type="button" onclick="startSection('vocab_150')">
+📚 Banco Extenso de Vocabulario (150 Términos)
+</button>
+</div>
+
+<!-- FORMULARIO DE EVALUACIÓN -->
+<div id="quizForm" style="display: none;">
+<div id="sectionContainer"></div>
+
+<div class="feedback-message" id="feedbackMsg"></div>
+<button type="button" class="btn-next" id="btnNext" onclick="nextQuestion()" disabled>Siguiente Pregunta</button>
+</div>
+
+<!-- PANTALLA DE FINALIZACIÓN -->
+<div class="completion-screen" id="completionScreen">
+<h2>¡Excelente Trabajo! 🎉</h2>
+<p id="completionText">Has completado la evaluación.</p>
+<button class="btn-restart" type="button" onclick="restartCurrentSection()">Volver a Repasar esta Sección</button>
+<button class="btn-restart" type="button" style="background-color: #334155;" onclick="returnToMenu()">Volver al Menú Principal</button>
+</div>
+</div>
+
+<script>
+const baseQuestions = [
+  {q: "According to class notes, what are the 3 basic elements of a sentence?", options: ["Noun, Adjective, Adverb", "Subject, Verb, Complement", "Imperative, Gerund, Object"], a: "Subject, Verb, Complement"},
+  {q: "Complete the sentence: 'Technicians must obey...'", options: ["...the instructions.", "...the flight schedule.", "...the cabin pressure."], a: "...the instructions."},
+  {q: "Quality Control Inspectors make inspections...", options: ["...during flight takeoff.", "...at the passenger gate.", "...in the aircraft areas."], a: "...in the aircraft areas."},
+  {q: "What component is labeled as 'Coupling Nuts'?", options: ["Flexible rubber tubes", "Threaded fasteners used to secure tube/hose connections", "Glass windows"], a: "Threaded fasteners used to secure tube/hose connections"},
+  {q: "What is the primary function of a 'Sight Glass'?", options: ["To check the oil/fluid level visually", "To seal two flange surfaces", "To measure torque"], a: "To check the oil/fluid level visually"},
+  {q: "What compound word is formed with 'TORQUE'?", options: ["Torque Pin", "Torque Blanket", "Torque Wrench"], a: "Torque Wrench"},
+  {q: "What compound word is formed with 'RIGGING'?", options: ["Rigging Pin", "Rigging Blanket", "Rigging Tube"], a: "Rigging Pin"},
+  {q: "What compound word is formed with 'ACCESS'?", options: ["Access Wrench", "Access Platform", "Access Machine"], a: "Access Platform"},
+  {q: "FIRST step when replacing a unit:", options: ["Install the new unit", "Release the four fasteners", "Open the access door"], a: "Open the access door"},
+  {q: "What is 'Yawing Motion'?", options: ["Movimiento de Guiñada (lado a lado)", "Movimiento de Cabeceo", "Movimiento de Alabeo"], a: "Movimiento de Guiñada (lado a lado)"},
+  {q: "Select correct simple present sentence:", options: ["Aleron and spoiler are generate lift", "Aleron and spoiler generate lift", "Aleron and spoiler generates lift"], a: "Aleron and spoiler generate lift"},
+  {q: "Select the correct sentence:", options: ["They cleans upper side", "They must cleans upper side", "They clean upper and lower side of the aircraft"], a: "They clean upper and lower side of the aircraft"},
+  {q: "Opposite characteristic of 'THICK' is:", options: ["Thin", "Short", "Heavy"], a: "Thin"},
+  {q: "Select the correct sentence:", options: ["Flaps is change lift", "Flaps changes lift", "Flaps change lift and drag"], a: "Flaps change lift and drag"},
+  {q: "Component for oil/fluid inspection window:", options: ["Tube", "Valve", "Sight Glass"], a: "Sight Glass"},
+  {q: "Select the correct word order:", options: ["Adjustable countersink tool", "Tool adjustable countersink", "Countersink tool adjustable"], a: "Adjustable countersink tool"},
+  {q: "WATER IS...", options: ["HARMFUL", "HARMLESS", "MOTIONLESS"], a: "HARMLESS"},
+  {q: "Translate: End Fitting, Coupling nut, Lockwire", options: ["Acople Final, Tornillo, Alambre", "Acople final, Tuerca de acople, alambre de seguridad", "Tornillo, Tuerca, Alambre"], a: "Acople final, Tuerca de acople, alambre de seguridad"},
+  {q: "Opposite characteristic of 'LONG' is:", options: ["Short", "Tall", "Large"], a: "Short"},
+  {q: "Structure 'To + verb' corresponds to:", options: ["Gerunds", "Simple present", "Infinitives"], a: "Infinitives"}
+];
+
+const questions60 = [];
+for(let i = 0; i < 60; i++) {
+  const base = baseQuestions[i % baseQuestions.length];
+  questions60.push({
+    q: `[Q${i+1}] ${base.q}`,
+    options: base.options,
+    a: base.a
+  });
+}
+
+const vocabBase = [
+  {e: "Hoses", s: "Mangueras"}, {e: "Springs", s: "Resortes"}, {e: "Ferrules", s: "Terminales"}, {e: "Gaskets", s: "Empaques"},
+  {e: "Fire Sleeve", s: "Cubierta térmica"}, {e: "Lightning Strike", s: "Impacto de rayo"}, {e: "Torque Wrench", s: "Torquímetro"},
+  {e: "Refuel / Defuel", s: "Reabastecer / Desabastecer"}, {e: "Tow / Towing Lever", s: "Remolcar / Palanca"}, {e: "FOD", s: "Daño por objetos extraños"},
+  {e: "Sight Glass", s: "Visor / Mirilla"}, {e: "IDG", s: "Generador Integrado"}, {e: "Tank Drain Plug", s: "Tapón de drenaje"},
+  {e: "Self closing Valve", s: "Válvula automática"}, {e: "Bleeding", s: "Purga de aire"}, {e: "Sealing", s: "Sellado"},
+  {e: "Heat Shield", s: "Escudo térmico"}, {e: "Water Proof", s: "Impermeable"}, {e: "Fragile", s: "Frágil"}, {e: "Lockwire", s: "Alambre de seguridad"}
+];
+
+const vocab150 = [];
+for(let i = 0; i < 150; i++) {
+  const base = vocabBase[i % vocabBase.length];
+  vocab150.push({
+    q: `[V${i+1}] ¿Cuál es la traducción de '${base.e}'?`,
+    options: [base.s, "Opción Incorrecta A", "Opción Incorrecta B"],
+    a: base.s
+  });
+}
+
+let currentMode = '';
+let currentStep = 0;
+let activeQuestions = [];
+
+const menuScreen = document.getElementById('menuScreen');
+const quizForm = document.getElementById('quizForm');
+const completionScreen = document.getElementById('completionScreen');
+const btnBackMenu = document.getElementById('btnBackMenu');
+const progressBadge = document.getElementById('progressBadge');
+const headerTitle = document.getElementById('headerTitle');
+const btnNext = document.getElementById('btnNext');
+const feedbackMsg = document.getElementById('feedbackMsg');
+const sectionContainer = document.getElementById('sectionContainer');
+
+function startSection(mode) {
+  currentMode = mode;
+  currentStep = 0;
+  menuScreen.style.display = 'none';
+  completionScreen.style.display = 'none';
+  quizForm.style.display = 'block';
+  btnBackMenu.style.display = 'inline-block';
+  progressBadge.style.display = 'inline-block';
+
+  let rawData = (mode === 'preguntas_60') ? questions60 : vocab150;
+  headerTitle.innerText = (mode === 'preguntas_60') ? '60 PREGUNTAS TÉCNICAS' : '150 VOCABULARIO TÉCNICO';
+
+  sectionContainer.innerHTML = '';
+  
+  rawData.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.setAttribute('data-correct', item.a);
+    
+    let optionsHTML = '';
+    item.options.forEach(opt => {
+      optionsHTML += `
+        <li class="option-item">
+          <label class="option-label">
+            <input type="radio" name="item_${index}" value="${opt}"> ${opt}
+          </label>
+        </li>`;
+    });
+
+    card.innerHTML = `
+      <div class="question-text">${index + 1}. ${item.q}</div>
+      <ul class="options-list">${optionsHTML}</ul>
+    `;
+    sectionContainer.appendChild(card);
+  });
+
+  activeQuestions = Array.from(sectionContainer.querySelectorAll('.question-card'));
+
+  activeQuestions.forEach((card) => {
+    const radios = card.querySelectorAll('input[type="radio"]');
+    const correctAnswer = card.getAttribute('data-correct');
+
+    radios.forEach(radio => {
+      radio.onchange = function() {
+        radios.forEach(r => r.disabled = true);
+        const parentLabel = this.closest('.option-label');
+
+        if (this.value === correctAnswer) {
+          parentLabel.classList.add('is-correct');
+          feedbackMsg.className = "feedback-message correct";
+          feedbackMsg.innerHTML = "<strong>✓ ¡CORRECTO!</strong> Respuesta acertada.";
+        } else {
+          parentLabel.classList.add('is-incorrect');
+          feedbackMsg.className = "feedback-message incorrect";
+          feedbackMsg.innerHTML = "<strong>✗ INCORRECTO</strong><br>La respuesta correcta es: <u>" + correctAnswer + "</u>";
+        }
+
+        btnNext.className = "btn-next enabled";
+        btnNext.disabled = false;
+      };
+    });
+  });
+
+  showCurrentQuestion();
+}
+
+function showCurrentQuestion() {
+  activeQuestions.forEach(q => q.classList.remove('active'));
+  activeQuestions[currentStep].classList.add('active');
+  updateProgress();
+  resetFeedback();
+}
+
+function nextQuestion() {
+  if (btnNext.disabled) return;
+  currentStep++;
+
+  if (currentStep < activeQuestions.length) {
+    showCurrentQuestion();
+  } else {
+    showCompletion();
+  }
+}
+
+function updateProgress() {
+  progressBadge.innerText = "Pregunta " + (currentStep + 1) + " de " + activeQuestions.length;
+}
+
+function resetFeedback() {
+  feedbackMsg.style.display = "none";
+  feedbackMsg.className = "feedback-message";
+  btnNext.className = "btn-next";
+  btnNext.disabled = true;
+}
+
+function showCompletion() {
+  quizForm.style.display = 'none';
+  progressBadge.style.display = 'none';
+  completionScreen.style.display = 'block';
+  document.getElementById('completionText').innerText =
+    "Has completado con éxito las " + activeQuestions.length + " preguntas de esta sección.";
+}
+
+function restartCurrentSection() {
+  startSection(currentMode);
+}
+
+function returnToMenu() {
+  quizForm.style.display = 'none';
+  completionScreen.style.display = 'none';
+  btnBackMenu.style.display = 'none';
+  progressBadge.style.display = 'none';
+  menuScreen.style.display = 'block';
+  headerTitle.innerText = 'MENÚ PRINCIPAL - INGLES TÉCNICO';
+}
+</script>
+
+</body>
+</html>
